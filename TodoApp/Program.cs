@@ -1,4 +1,12 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using TodoApp.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("TodoAppIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'TodoAppIdentityDbContextConnection' not found.");;
+
+builder.Services.AddDbContext<TodoAppIdentityDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TodoAppIdentityDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
