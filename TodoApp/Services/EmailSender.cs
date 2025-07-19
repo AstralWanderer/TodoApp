@@ -17,6 +17,12 @@ public class EmailSender : IEmailSender
         _config = config;
     }
     
+    // Add user secrets for sender email address and app password 
+    // In the terminal enter the commands, remembering to omit the "<>":
+    // "dotnet user-secrets init"
+    // "dotnet user-secrets set "EmailSettings:SmtpUser" "<email@domain.com>"
+    // "dotnet user-secrets set "EmailSettings:SmtpPass" "<app-password>"
+    
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
         var message = new MimeMessage();
